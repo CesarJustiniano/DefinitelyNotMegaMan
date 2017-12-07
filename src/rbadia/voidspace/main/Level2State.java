@@ -47,6 +47,24 @@ public class Level2State extends Level1State {
 				// draw explosion
 				getGraphicsManager().drawAsteroidExplosion(asteroidExplosion, g2d, this);
 			}
+		}
+		
+		if((asteroid2.getX() + asteroid2.getPixelsWide() >  0)) {
+			asteroid2.translate(-asteroid2.getSpeed() + rand.nextInt(asteroid2.getSpeed()) - rand.nextInt(asteroid2.getSpeed()), 
+					asteroid2.getSpeed()/2 + rand.nextInt(asteroid2.getSpeed()) - rand.nextInt(asteroid2.getSpeed()));
+			getGraphicsManager().drawAsteroid(asteroid2, g2d, this);	
+		}
+		else {
+			long currentTime = System.currentTimeMillis();
+			if((currentTime - lastAsteroid2Time) > NEW_ASTEROID_DELAY){
+
+				asteroid2.setLocation(this.getWidth() - asteroid2.getPixelsWide(),
+						rand.nextInt(this.getHeight() - asteroid2.getPixelsTall() - 32));
+			}
+			else {
+				// draw explosion
+				getGraphicsManager().drawAsteroidExplosion(asteroidExplosion, g2d, this);
+			}
 		}	
 	}
 
