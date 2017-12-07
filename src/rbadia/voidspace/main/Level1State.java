@@ -228,13 +228,9 @@ public class Level1State extends LevelState {
 		drawBullets();
 		drawBigBullets();
 		checkBullletAsteroidCollisions();
-		checkBullletAsteroid2Collisions();
 		checkBigBulletAsteroidCollisions();
-		checkBigBulletAsteroid2Collisions();
 		checkMegaManAsteroidCollisions();
-		checkMegaManAsteroid2Collisions();
 		checkAsteroidFloorCollisions();
-		checkAsteroid2FloorCollisions();
 
 		// update asteroids destroyed (score) label  
 		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getAsteroidsDestroyed()));
@@ -248,13 +244,8 @@ public class Level1State extends LevelState {
 		for(int i=0; i<9; i++){
 			if(asteroid.intersects(floor[i])){
 				removeAsteroid(asteroid);
-
 			}
-		}
-	}
-	
-	protected void checkAsteroid2FloorCollisions() {
-		for(int i=0; i<9; i++){
+			
 			if(asteroid2.intersects(floor[i])){
 				removeAsteroid(asteroid2);
 
@@ -268,10 +259,7 @@ public class Level1State extends LevelState {
 			status.setLivesLeft(status.getLivesLeft() - 1);
 			removeAsteroid(asteroid);
 		}
-	}
-	
-	protected void checkMegaManAsteroid2Collisions() {
-		GameStatus status = getGameStatus();
+		
 		if(asteroid2.intersects(megaMan)){
 			status.setLivesLeft(status.getLivesLeft() - 1);
 			removeAsteroid(asteroid2);
@@ -288,13 +276,7 @@ public class Level1State extends LevelState {
 				removeAsteroid(asteroid);
 				damage=0;
 			}
-		}
-	}
-	
-	protected void checkBigBulletAsteroid2Collisions() {
-		GameStatus status = getGameStatus();
-		for(int i=0; i<bigBullets.size(); i++){
-			BigBullet bigBullet = bigBullets.get(i);
+			
 			if(asteroid2.intersects(bigBullet)){
 				// increase asteroids destroyed count
 				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
@@ -318,13 +300,7 @@ public class Level1State extends LevelState {
 				bullets.remove(i);
 				break;
 			}
-		}
-	}
-	
-	protected void checkBullletAsteroid2Collisions() {
-		GameStatus status = getGameStatus();
-		for(int i=0; i<bullets.size(); i++){
-			Bullet bullet = bullets.get(i);
+			
 			if(asteroid2.intersects(bullet)){
 				// increase asteroids destroyed count
 				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
