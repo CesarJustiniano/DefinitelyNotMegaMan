@@ -438,19 +438,19 @@ public class LevelLogic {
 			getLevelState().moveMegaManRight();
 		}
 		
-		if(ih.isNPressed()){
-			getLevelState().doLevelWon();
-			if(getLevelState().getLevel() < 2){ //Checking if it still not the final level
-				getLevelState().setLevel(getLevelState().getLevel() + 1);
-				getLevelState().doStart();
-			}
-			else{
-				getLevelState().doGameOverScreen();
-				getLevelState().doGameOver();
-			}
+		if(ih.isNPressed()){ //Skip level button (still needs work)
+//			if(getLevelState().getLevel() < 2){ //Checking if it still not the final level
+//				getLevelState().doLevelWon();
+//				getLevelState().setLevel(getLevelState().getLevel() + 1);
+//				levelState.setCurrentState(levelState.GETTING_READY);
+//			}
+//			else{
+//				getLevelState().doGameOverScreen();
+//				getLevelState().doGameOver();
+//			}
 		}
 		
-		if(ih.isMPressed()){
+		if(ih.isMPressed()){ //Mute button
 			if(this.getMute() == 0){
 				MegaManMain.audioClip.close();
 				mute = 1;
