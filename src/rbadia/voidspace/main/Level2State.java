@@ -32,7 +32,8 @@ public class Level2State extends Level1State {
 	protected void drawAsteroid() {
 		Graphics2D g2d = getGraphics2D();
 		if((asteroid.getX() + asteroid.getPixelsWide() >  0)) {
-			asteroid.translate(-asteroid.getSpeed(), asteroid.getSpeed()/2);
+			asteroid.translate(-asteroid.getSpeed() + rand.nextInt(asteroid.getSpeed()) - rand.nextInt(asteroid.getSpeed()), 
+					asteroid.getSpeed()/2 + rand.nextInt(asteroid.getSpeed()) - rand.nextInt(asteroid.getSpeed()));
 			getGraphicsManager().drawAsteroid(asteroid, g2d, this);	
 		}
 		else {
@@ -41,6 +42,24 @@ public class Level2State extends Level1State {
 
 				asteroid.setLocation(this.getWidth() - asteroid.getPixelsWide(),
 						rand.nextInt(this.getHeight() - asteroid.getPixelsTall() - 32));
+			}
+			else {
+				// draw explosion
+				getGraphicsManager().drawAsteroidExplosion(asteroidExplosion, g2d, this);
+			}
+		}
+		
+		if((asteroid2.getX() + asteroid2.getPixelsWide() >  0)) {
+			asteroid2.translate(-asteroid2.getSpeed() + rand.nextInt(asteroid2.getSpeed()) - rand.nextInt(asteroid2.getSpeed()), 
+					asteroid2.getSpeed()/2 + rand.nextInt(asteroid2.getSpeed()) - rand.nextInt(asteroid2.getSpeed()));
+			getGraphicsManager().drawAsteroid(asteroid2, g2d, this);	
+		}
+		else {
+			long currentTime = System.currentTimeMillis();
+			if((currentTime - lastAsteroid2Time) > NEW_ASTEROID_DELAY){
+
+				asteroid2.setLocation(this.getWidth() - asteroid2.getPixelsWide(),
+						rand.nextInt(this.getHeight() - asteroid2.getPixelsTall() - 32));
 			}
 			else {
 				// draw explosion

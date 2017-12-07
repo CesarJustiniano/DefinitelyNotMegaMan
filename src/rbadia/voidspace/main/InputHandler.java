@@ -16,6 +16,7 @@ public class InputHandler implements KeyListener{
 	private boolean eIsPressed;
 	private boolean qIsPressed;
 	private boolean mIsPressed;
+	private boolean nIsPressed;
 	private boolean sIsPressed;
 	private boolean iIsPressed;
 
@@ -43,6 +44,7 @@ public class InputHandler implements KeyListener{
 		eIsPressed = false;
 		qIsPressed = false;
 		mIsPressed = false;
+		nIsPressed = false;
 		sIsPressed = false;
 		iIsPressed = false;
 	}
@@ -81,6 +83,10 @@ public class InputHandler implements KeyListener{
 
 	public boolean isMPressed() {
 		return mIsPressed;
+	}
+	
+	public boolean isNPressed(){
+		return nIsPressed;
 	}
 
 	public boolean isSPressed() {
@@ -126,6 +132,9 @@ public class InputHandler implements KeyListener{
 		case KeyEvent.VK_M:
 			this.mIsPressed= true;
 			break;
+		case KeyEvent.VK_N:
+			this.nIsPressed = true;
+			break;
 		case KeyEvent.VK_S:
 			this.sIsPressed = true;
 			break;
@@ -168,6 +177,9 @@ public class InputHandler implements KeyListener{
 			break;
 		case KeyEvent.VK_M:
 			this.mIsPressed = false;
+			break;
+		case KeyEvent.VK_N:
+			this.nIsPressed = false;
 			break;
 		case KeyEvent.VK_S:
 			this.sIsPressed = false;
