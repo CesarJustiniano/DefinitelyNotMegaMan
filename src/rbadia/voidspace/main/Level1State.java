@@ -90,7 +90,7 @@ public class Level1State extends LevelState {
 	public Asteroid getAsteroid2() 				{ return asteroid2; 		}
 	public List<Bullet> getBullets() 			{ return bullets; 		}
 	public List<BigBullet> getBigBullets()		{ return bigBullets;   	}
-
+	
 	// Level state methods
 	// The method associated with the current level state will be called 
 	// repeatedly during each LevelLoop iteration until the next a state 
@@ -446,6 +446,9 @@ public class Level1State extends LevelState {
 
 	@Override
 	public boolean isLevelWon() {
+		if(this.getInputHandler().isNPressed()){
+			return true;
+		}
 		return levelAsteroidsDestroyed >= 3;
 	}
 
