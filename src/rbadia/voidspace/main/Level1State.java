@@ -36,6 +36,7 @@ public class Level1State extends LevelState {
 	protected BufferedImage backBuffer;
 	protected MegaMan megaMan;
 	protected Asteroid asteroid;
+	protected Asteroid asteroid2;
 	protected List<Bullet> bullets;
 	protected List<BigBullet> bigBullets;
 	protected Floor[] floor;	
@@ -47,6 +48,7 @@ public class Level1State extends LevelState {
 	protected static final int NEW_ASTEROID_DELAY = 500;
 
 	protected long lastAsteroidTime;
+	protected long lastAsteroid2Time;
 	protected long lastLifeTime;
 
 	protected Rectangle asteroidExplosion;
@@ -85,6 +87,7 @@ public class Level1State extends LevelState {
 	public int getNumPlatforms()					{ return numPlatforms; 	}
 	public Platform[] getPlatforms()				{ return platforms; 		}
 	public Asteroid getAsteroid() 				{ return asteroid; 		}
+	public Asteroid getAsteroid2() 				{ return asteroid2; 		}
 	public List<Bullet> getBullets() 			{ return bullets; 		}
 	public List<BigBullet> getBigBullets()		{ return bigBullets;   	}
 
@@ -314,7 +317,8 @@ public class Level1State extends LevelState {
 		Graphics2D g2d = getGraphics2D();
 		GameStatus status = getGameStatus();
 		if((asteroid.getX() + asteroid.getWidth() >  0)){
-			asteroid.translate(-asteroid.getSpeed(), 0);
+			asteroid.translate(-asteroid.getSpeed() + rand.nextInt(asteroid.getSpeed()) 
+			- rand.nextInt(asteroid.getSpeed()), rand.nextInt(asteroid.getSpeed()) - rand.nextInt(asteroid.getSpeed()));
 			getGraphicsManager().drawAsteroid(asteroid, g2d, this);	
 		}
 		else {
