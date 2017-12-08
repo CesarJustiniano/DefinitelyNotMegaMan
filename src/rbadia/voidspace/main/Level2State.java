@@ -26,6 +26,8 @@ public class Level2State extends Level1State {
 	private boolean isBossGoingDown = true;
 	private boolean isBossSpawning = true;
 	private int bossDamage = 0;
+	private long lastBossBulletTime;
+	private long lastCollisionTime;
 	
 	
 	
@@ -178,7 +180,11 @@ public class Level2State extends Level1State {
 	protected void checkMegaManBossCollisions() {
 		GameStatus status = getGameStatus();
 		if(boss.intersects(megaMan)){
-			status.setLivesLeft(status.getLivesLeft() - 1);
+			long currentTime = System.currentTimeMillis();
+			if((currentTime - lastCollisionTime) > 1000){
+				lastCollisionTime = currentTime;
+				status.setLivesLeft(status.getLivesLeft() - 1);
+			}
 		}
 	}
 	
@@ -218,6 +224,12 @@ public class Level2State extends Level1State {
 	
 	protected void drawBossBullets() {
 		Graphics2D g2d = getGraphics2D();
+		
+		long currentTime = System.currentTimeMillis();
+		if((currentTime - lastBossBulletTime) > 1000){
+			lastBossBulletTime = currentTime;
+			fireBossBullet();
+		}
 		for(int i=0; i<bossBullets.size(); i++){
 			BigBullet bigBullet = bossBullets.get(i);
 			getGraphicsManager().drawBigBullet(bigBullet, g2d, this);
@@ -239,7 +251,7 @@ public class Level2State extends Level1State {
 	}
 	
 	public boolean moveBossBullet(BigBullet bossBullet){
-		if(bossBullet.getX() - bossBullet.getSpeed() < 0){
+		if(bossBullet.getY() - bossBullet.getSpeed() >= 0){
 			bossBullet.translate(-bossBullet.getSpeed(), 0);
 			return false;
 		}
