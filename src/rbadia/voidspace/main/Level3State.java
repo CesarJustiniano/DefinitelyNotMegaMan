@@ -24,13 +24,19 @@ public class Level3State extends Level2State {
 	protected Asteroid asteroid2;
 	
 	protected Boss boss;
+	protected Boss boss2;
 	protected List<BigBullet> bossBullets;
+	protected List<BigBullet> boss2Bullets;
 	protected Rectangle bossExplosion;
 	private boolean isBossGoingDown = true;
+	private boolean isBoss2GoingDown = false;
 	private boolean isBossSpawning = true;
+	private boolean isBoss2Spawning = true;
 	private int bossDamage = 0;
+	private int boss2Damage = 0;
 	
 	private long lastBossBulletTime;
+	private long lastBoss2BulletTime;
 	private long lastCollisionTime;
 	protected long lastAsteroid2Time;
 	
@@ -53,10 +59,12 @@ public class Level3State extends Level2State {
 		setCurrentState(getStartState());
 		
 		bossBullets = new ArrayList<BigBullet>();
+		boss2Bullets = new ArrayList<BigBullet>();
 		
 		newAsteroid(this);
 		newAsteroid2(this);
 		newBoss(this);
+		newBoss2(this);
 		
 		lastAsteroid2Time = -NEW_ASTEROID_DELAY;
 	}
@@ -88,7 +96,7 @@ public class Level3State extends Level2State {
 		drawAsteroid();
 		drawBullets();
 		drawBigBullets();
-		drawBoss();
+		drawBosses();
 		drawBossBullets();
 		checkBullletAsteroidCollisions();
 		checkBigBulletAsteroidCollisions();
@@ -147,7 +155,7 @@ public class Level3State extends Level2State {
 		}	
 	}
 	
-	protected void drawBoss(){
+	protected void drawBosses(){
 		Graphics2D g2d = getGraphics2D();
 		if(isBossSpawning){
 			boss.setLocation(this.getWidth() - boss.getPixelsWide(), 0);
@@ -171,6 +179,30 @@ public class Level3State extends Level2State {
 			isBossGoingDown = true;
 			boss.translate(0, boss.getDefaultSpeed());
 			getGraphicsManager().drawBoss(boss, g2d, this);
+		}
+		
+		if(isBoss2Spawning){
+			boss2.setLocation(0, this.getHeight() - boss2.getPixelsTall());
+			getGraphicsManager().drawBoss(boss2, g2d, this);
+			isBoss2Spawning = false;
+		}
+		
+		if(this.getHeight() - boss2.getPixelsTall() > boss2.getY() && isBoss2GoingDown){
+			boss2.translate(0, boss2.getDefaultSpeed());
+			getGraphicsManager().drawBoss(boss2, g2d, this);
+		}
+		else{
+			isBoss2GoingDown = false;
+		}
+		
+		if(boss2.getY() > 0 && !isBoss2GoingDown){
+			boss2.translate(0, -boss2.getDefaultSpeed());
+			getGraphicsManager().drawBoss(boss2, g2d, this);
+		}
+		else if(!isBoss2GoingDown){
+			isBoss2GoingDown = true;
+			boss2.translate(0, boss2.getDefaultSpeed());
+			getGraphicsManager().drawBoss(boss2, g2d, this);
 		}
 	}
 	
@@ -197,6 +229,14 @@ public class Level3State extends Level2State {
 				status.setLivesLeft(status.getLivesLeft() - 1);
 			}
 		}
+		
+		if(boss2.intersects(megaMan)){
+			long currentTime = System.currentTimeMillis();
+			if((currentTime - lastCollisionTime) > 1000){
+				lastCollisionTime = currentTime;
+				status.setLivesLeft(status.getLivesLeft() - 1);
+			}
+		}
 	}
 	
 	protected void checkBulletBossCollisions() {
@@ -208,6 +248,17 @@ public class Level3State extends Level2State {
 				if(bossDamage >= 5){
 					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
 					removeBoss(boss);
+				}
+				// remove bullet
+				bullets.remove(i);
+				break;
+			}
+			
+			if(boss2.intersects(bullet)){
+				boss2Damage++;
+				if(boss2Damage >= 5){
+					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
+					removeBoss(boss2);
 				}
 				// remove bullet
 				bullets.remove(i);
@@ -225,6 +276,17 @@ public class Level3State extends Level2State {
 				if(bossDamage >= 5){
 					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
 					removeBoss(boss);
+				}
+				// remove big bullet
+				bigBullets.remove(i);
+				break;
+			}
+			
+			if(boss2.intersects(bigBullet)){
+				boss2Damage += 3;
+				if(boss2Damage >= 5){
+					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
+					removeBoss(boss2);
 				}
 				// remove big bullet
 				bigBullets.remove(i);
@@ -251,6 +313,22 @@ public class Level3State extends Level2State {
 				i--;
 			}
 		}
+		
+		currentTime = System.currentTimeMillis();
+		if((currentTime - lastBoss2BulletTime) > 1000){
+			lastBoss2BulletTime = currentTime;
+			fireBoss2Bullet(); 
+		}
+		for(int i=0; i<boss2Bullets.size(); i++){
+			BigBullet bigBullet = boss2Bullets.get(i);
+			getGraphicsManager().drawBigBullet(bigBullet, g2d, this);
+
+			boolean remove = this.moveBoss2Bullet(bigBullet); 
+			if(remove){
+				boss2Bullets.remove(i);
+				i--;
+			}
+		}
 	}
 	
 	public void fireBossBullet(){
@@ -261,9 +339,27 @@ public class Level3State extends Level2State {
 		this.getSoundManager().playBulletSound();
 	}
 	
+	public void fireBoss2Bullet(){
+		int xPos = boss2.x;
+		int yPos = boss2.y + boss.width/2 - BigBullet.HEIGHT + 4;
+		BigBullet  bossBullet = new BigBullet(xPos, yPos);
+		boss2Bullets.add(bossBullet);
+		this.getSoundManager().playBulletSound();
+	}
+	
 	public boolean moveBossBullet(BigBullet bossBullet){
 		if(bossBullet.getY() - bossBullet.getSpeed() >= 0){
 			bossBullet.translate(-bossBullet.getSpeed(), 0);
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	
+	public boolean moveBoss2Bullet(BigBullet bossBullet){
+		if(bossBullet.getY() - bossBullet.getSpeed() >= 0){
+			bossBullet.translate(bossBullet.getSpeed(), 0);
 			return false;
 		}
 		else{
@@ -288,11 +384,18 @@ public class Level3State extends Level2State {
 		return platforms;
 	}
 	
-	public Boss newBoss(Level2State screen){
+	public Boss newBoss(Level3State screen){
 		int xPos = (int) (screen.getWidth() - Boss.WIDTH);
 		int yPos = 0;
 		boss = new Boss(xPos, yPos);
 		return boss;
+	}
+	
+	public Boss newBoss2(Level3State screen){
+		int xPos = 0;
+		int yPos = (int) (screen.getWidth() - Boss.HEIGHT);
+		boss2 = new Boss(xPos, yPos);
+		return boss2;
 	}
 	
 	public void removeBoss(Boss boss){
@@ -304,7 +407,7 @@ public class Level3State extends Level2State {
 				boss.getPixelsTall());
 		boss.setLocation(-boss.getPixelsWide(), -boss.getPixelsTall());
 		// play boss explosion sound
-		this.getSoundManager().playShipExplosionSound();;
+		this.getSoundManager().playAsteroidExplosionSound();
 	}
 	
 	protected void checkAsteroidFloorCollisions() {
