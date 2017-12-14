@@ -17,7 +17,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import rbadia.voidspace.graphics.GraphicsManager;
+import rbadia.voidspace.graphics.NewGraphicsManager;
 import rbadia.voidspace.model.Asteroid;
 import rbadia.voidspace.model.BigBullet;
 import rbadia.voidspace.model.Bullet;
@@ -62,7 +62,7 @@ public class Level1State extends LevelState {
 	// Constructors
 	public Level1State(int level, MainFrame frame, GameStatus status, 
 			LevelLogic gameLogic, InputHandler inputHandler,
-			GraphicsManager graphicsMan, SoundManager soundMan) {
+			NewGraphicsManager graphicsMan, SoundManager soundMan) {
 		super();
 		this.setSize(new Dimension(500, 400));
 		this.setPreferredSize(new Dimension(500, 400));

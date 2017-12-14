@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import rbadia.voidspace.graphics.GraphicsManager;
+import rbadia.voidspace.graphics.NewGraphicsManager;
 import rbadia.voidspace.model.Asteroid;
 import rbadia.voidspace.model.BigBullet;
 import rbadia.voidspace.model.Boss;
@@ -28,8 +28,8 @@ public class Level3State extends Level2State {
 	protected List<BigBullet> bossBullets;
 	protected List<BigBullet> boss2Bullets;
 	protected Rectangle bossExplosion;
-	private boolean isBossGoingDown = true;
-	private boolean isBoss2GoingDown = false;
+	private boolean isBossGoingDown = true;		//First boss is spawning on top
+	private boolean isBoss2GoingDown = false;	//Second boss is spawning on bottom
 	private boolean isBossSpawning = true;
 	private boolean isBoss2Spawning = true;
 	private int bossDamage = 0;
@@ -46,11 +46,11 @@ public class Level3State extends Level2State {
 	// Constructors
 	public Level3State(int level, MainFrame frame, GameStatus status, 
 			LevelLogic gameLogic, InputHandler inputHandler,
-			GraphicsManager graphicsMan, SoundManager soundMan) {
+			NewGraphicsManager graphicsMan, SoundManager soundMan) {
 		super(level, frame, status, gameLogic, inputHandler, graphicsMan, soundMan);
 	}
 	
-	public Asteroid getAsteroid2() 				{ return asteroid2; 	}
+	public Asteroid getAsteroid2() { return asteroid2; }
 
 	@Override
 	public void doStart() {	
@@ -211,9 +211,17 @@ public class Level3State extends Level2State {
 		for(int i=0; i<bossBullets.size(); i++){
 			BigBullet bigBullet = bossBullets.get(i);
 			if(megaMan.intersects(bigBullet)){
-				// increase asteroids destroyed count
 				status.setLivesLeft(status.getLivesLeft() - 1);
 				bossBullets.remove(i);
+				break;
+			}
+		}
+		
+		for(int i=0; i<boss2Bullets.size(); i++){
+			BigBullet bigBullet = boss2Bullets.get(i);
+			if(megaMan.intersects(bigBullet)){
+				status.setLivesLeft(status.getLivesLeft() - 1);
+				boss2Bullets.remove(i);
 				break;
 			}
 		}

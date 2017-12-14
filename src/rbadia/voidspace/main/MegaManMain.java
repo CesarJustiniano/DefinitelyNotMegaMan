@@ -13,7 +13,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import rbadia.voidspace.graphics.GraphicsManager;
+import rbadia.voidspace.graphics.NewGraphicsManager;
 import rbadia.voidspace.sounds.SoundManager;
 
 /**
@@ -36,7 +36,7 @@ public class MegaManMain {
 		MainFrame frame = new MainFrame();              		// Main Game Window
 		LevelLogic gameLogic = new LevelLogic();        		// Coordinates among various levels
 		InputHandler inputHandler = new InputHandler(); 		// Keyboard listener
-		GraphicsManager graphicsMan = new GraphicsManager(); // Draws all graphics for game objects
+		NewGraphicsManager graphicsMan = new NewGraphicsManager(); // Draws all graphics for game objects
 		SoundManager soundMan = new SoundManager();			// Loads and plays all sounds during the game
 
 		audioFile = new File("audio/menuScreen.wav");

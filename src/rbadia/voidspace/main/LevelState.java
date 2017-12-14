@@ -2,7 +2,7 @@ package rbadia.voidspace.main;
 
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-import rbadia.voidspace.graphics.GraphicsManager;
+import rbadia.voidspace.graphics.NewGraphicsManager;
 import rbadia.voidspace.sounds.SoundManager;
 
 public abstract class LevelState extends JPanel {
@@ -21,7 +21,7 @@ public abstract class LevelState extends JPanel {
 	private int currentState = START_STATE;
 	private int startState = START_STATE;
 	
-	private GraphicsManager graphicsManager;
+	private NewGraphicsManager graphicsManager;
 	private LevelLogic gameLogic;
 	private InputHandler inputHandler;
 	private MainFrame mainFrame;
@@ -31,7 +31,7 @@ public abstract class LevelState extends JPanel {
 	private Graphics2D g2d;
 	
 	// Getters
-	public GraphicsManager getGraphicsManager() { return graphicsManager; }
+	public NewGraphicsManager getGraphicsManager() { return graphicsManager; }
 	public LevelLogic getGameLogic() { return gameLogic; }
 	public InputHandler getInputHandler() { return inputHandler; }
 	public MainFrame getMainFrame() { return mainFrame; }
@@ -43,7 +43,7 @@ public abstract class LevelState extends JPanel {
 	public int getStartState() { return startState; }
 	
 	// Setters
-	protected void setGraphicsManager(GraphicsManager graphicsManager) { this.graphicsManager = graphicsManager; }
+	protected void setGraphicsManager(NewGraphicsManager graphicsManager) { this.graphicsManager = graphicsManager; }
 	protected void setGameLogic(LevelLogic gameLogic) { this.gameLogic = gameLogic; }
 	protected void setInputHandler(InputHandler inputHandler) { this.inputHandler = inputHandler; }
 	public void setMainFrame ( MainFrame mainFrame) { this.mainFrame = mainFrame; }
