@@ -52,7 +52,6 @@ public class LevelLogic {
 		return mute;
 	}
 
-
 	/**
 	 * Prepare for a new game.
 	 */

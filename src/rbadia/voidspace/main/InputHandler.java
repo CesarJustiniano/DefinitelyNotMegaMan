@@ -3,6 +3,7 @@ package rbadia.voidspace.main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+
 /**
  * Handles user input events.
  */
@@ -22,8 +23,14 @@ public class InputHandler implements KeyListener{
 
 	private LevelState levelState;
 	//private GameScreen gScreen;
+	private LevelLogic LevelLogic;
 
+	//getters
 	public LevelState getLevelState() { return levelState; }
+	public LevelLogic getLevelLogic() {return LevelLogic;}
+	
+	//setters
+	public void setLevelLogic(LevelLogic levelLogic) {LevelLogic = levelLogic;}
 	public void setLevelState(LevelState levelState) { this.levelState = levelState; }
 
 	/**
