@@ -277,11 +277,11 @@ public class Level3State extends Level2State {
 		platforms = new Platform[n];
 		for(int i=0; i<n; i++){
 			this.platforms[i] = new Platform(0,0);
-			if(i<4)	platforms[i].setLocation(50+ i*50, getHeight()/2 + 140 - i*40);
+			if(i<4)	platforms[i].setLocation(200, getHeight()/2 + 140 - i*40);
 			if(i==4) platforms[i].setLocation(50 +i*50, getHeight()/2 + 140 - 3*40);
 			if(i>4){	
 				int k=4;
-				platforms[i].setLocation(50 + i*50, getHeight()/2 + 20 + (i-k)*40 );
+				platforms[i].setLocation(250, getHeight()/2 + 20 + (i-k)*40 );
 				k=k+2;
 			}
 		}
