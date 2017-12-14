@@ -74,7 +74,7 @@ public class Level3State extends Level2State {
 		if(this.getInputHandler().isNPressed()){
 			return true;
 		}
-		return levelAsteroidsDestroyed >= 5 && bossDamage >= 5;
+		return levelAsteroidsDestroyed >= 5 && bossDamage >= 5 && boss2Damage >=5;
 	}
 	
 	@Override
