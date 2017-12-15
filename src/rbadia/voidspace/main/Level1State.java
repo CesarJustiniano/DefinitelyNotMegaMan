@@ -37,9 +37,7 @@ public class Level1State extends LevelState {
 	protected MegaMan megaMan;
 	protected Asteroid asteroid;
 	protected List<Bullet> bullets;
-	protected List<Bullet> bulletsL;
 	protected List<BigBullet> bigBullets;
-	protected List<BigBullet> bigBulletsL;
 	protected Floor[] floor;	
 	protected int numPlatforms=8;
 	protected Platform[] platforms;
@@ -89,8 +87,6 @@ public class Level1State extends LevelState {
 	public Asteroid getAsteroid() 				{ return asteroid; 		}
 	public List<Bullet> getBullets() 			{ return bullets; 		}
 	public List<BigBullet> getBigBullets()		{ return bigBullets;   	}
-	public List<Bullet> getBulletsL() 			{ return bulletsL; 		}
-	public List<BigBullet> getBigBulletsL()		{ return bigBulletsL;   	}
 	
 	// Level state methods
 	// The method associated with the current level state will be called 
@@ -105,9 +101,7 @@ public class Level1State extends LevelState {
 		setCurrentState(getStartState());
 		// init game variables
 		bullets = new ArrayList<Bullet>();
-		bulletsL = new ArrayList<Bullet>();
 		bigBullets = new ArrayList<BigBullet>();
-		bigBulletsL = new ArrayList<BigBullet>();
 		//numPlatforms = new Platform[5];
 
 		GameStatus status = this.getGameStatus();
@@ -268,16 +262,6 @@ public class Level1State extends LevelState {
 				damage=0;
 			}
 		}
-		
-		for(int i=0; i<bigBulletsL.size(); i++){
-			BigBullet bigBullet = bigBulletsL.get(i);
-			if(asteroid.intersects(bigBullet)){
-				// increase asteroids destroyed count
-				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
-				removeAsteroid(asteroid);
-				damage=0;
-			}
-		}
 	}
 
 	protected void checkBullletAsteroidCollisions() {
@@ -295,20 +279,6 @@ public class Level1State extends LevelState {
 				break;
 			}
 		}
-		
-		for(int i=0; i<bulletsL.size(); i++){
-			Bullet bullet = bulletsL.get(i);
-			if(asteroid.intersects(bullet)){
-				// increase asteroids destroyed count
-				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
-				removeAsteroid(asteroid);
-				levelAsteroidsDestroyed++;
-				damage=0;
-				// remove bullet
-				bulletsL.remove(i);
-				break;
-			}
-		}
 	}
 
 	protected void drawBigBullets() {
@@ -323,19 +293,6 @@ public class Level1State extends LevelState {
 				i--;
 			}
 		}
-		
-		for(int i=0; i<bigBulletsL.size(); i++){
-			BigBullet bigBullet = bigBulletsL.get(i);
-			getGraphicsManager().drawBigBullet(bigBullet, g2d, this);
-
-			boolean remove = this.moveBigBulletL(bigBullet);
-			if(remove){
-				bigBulletsL.remove(i);
-				i--;
-			}
-		}
-		
-		
 	}
 
 	protected void drawBullets() {
@@ -351,18 +308,6 @@ public class Level1State extends LevelState {
 				i--;
 			}
 		}
-		
-		for(int i=0; i<bulletsL.size(); i++){
-			Bullet bullet = bulletsL.get(i);
-			getGraphicsManager().drawBullet(bullet, g2d, this);
-
-			boolean remove =   this.moveBulletL(bullet);
-			if(remove){
-				bulletsL.remove(i);
-				i--;
-			}
-		}
-		
 	}
 
 	protected void drawAsteroid() {
@@ -447,9 +392,6 @@ public class Level1State extends LevelState {
 
 	@Override
 	public boolean isLevelWon() {
-		if(this.getInputHandler().isNPressed()){
-			return true;
-		}
 		return levelAsteroidsDestroyed >= 3;
 	}
 
@@ -531,17 +473,9 @@ public class Level1State extends LevelState {
 	 * Fire a bullet from life.
 	 */
 	public void fireBullet(){
-		if(this.getInputHandler().isMegaManFacingRight()){
-			Bullet bullet = new Bullet(megaMan.x + megaMan.width - Bullet.WIDTH/2,
-					megaMan.y + megaMan.width/2 - Bullet.HEIGHT +2);
-			bullets.add(bullet);
-		}
-		else{
-			Bullet bullet = new Bullet(megaMan.x - Bullet.WIDTH/2,
-					megaMan.y + megaMan.width/2 - Bullet.HEIGHT +2);
-			bulletsL.add(bullet);
-		}
-		
+		Bullet bullet = new Bullet(megaMan.x + megaMan.width - Bullet.WIDTH/2,
+				megaMan.y + megaMan.width/2 - Bullet.HEIGHT +2);
+		bullets.add(bullet);
 		this.getSoundManager().playBulletSound();
 	}
 
@@ -550,19 +484,10 @@ public class Level1State extends LevelState {
 	 */
 	public void fireBigBullet(){
 		//BigBullet bigBullet = new BigBullet(megaMan);
-		if(this.getInputHandler().isMegaManFacingRight()){
-			int xPos = megaMan.x + megaMan.width - BigBullet.WIDTH / 2;
-			int yPos = megaMan.y + megaMan.width/2 - BigBullet.HEIGHT + 4;
-			BigBullet  bigBullet = new BigBullet(xPos, yPos);
-			bigBullets.add(bigBullet);
-		}
-		else{
-			int xPos = megaMan.x - BigBullet.WIDTH / 2;
-			int yPos = megaMan.y + megaMan.width/2 - BigBullet.HEIGHT + 4;
-			BigBullet  bigBullet = new BigBullet(xPos, yPos);
-			bigBulletsL.add(bigBullet);
-		}
-		
+		int xPos = megaMan.x + megaMan.width - BigBullet.WIDTH / 2;
+		int yPos = megaMan.y + megaMan.width/2 - BigBullet.HEIGHT + 4;
+		BigBullet  bigBullet = new BigBullet(xPos, yPos);
+		bigBullets.add(bigBullet);
 		this.getSoundManager().playBulletSound();
 	}
 
@@ -580,16 +505,6 @@ public class Level1State extends LevelState {
 			return true;
 		}
 	}
-	
-	public boolean moveBulletL(Bullet bullet){
-		if(bullet.getY() - bullet.getSpeed() >= 0){
-			bullet.translate(-bullet.getSpeed(), 0);
-			return false;
-		}
-		else{
-			return true;
-		}
-	}
 
 	/** Move a "Power Shot" bullet once fired.
 	 * @param bigBullet the bullet to move
@@ -598,16 +513,6 @@ public class Level1State extends LevelState {
 	public boolean moveBigBullet(BigBullet bigBullet){
 		if(bigBullet.getY() - bigBullet.getSpeed() >= 0){
 			bigBullet.translate(bigBullet.getSpeed(), 0);
-			return false;
-		}
-		else{
-			return true;
-		}
-	}
-	
-	public boolean moveBigBulletL(BigBullet bigBullet){
-		if(bigBullet.getY() - bigBullet.getSpeed() >= 0){
-			bigBullet.translate(-bigBullet.getSpeed(), 0);
 			return false;
 		}
 		else{

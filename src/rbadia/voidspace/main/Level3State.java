@@ -17,28 +17,19 @@ import rbadia.voidspace.sounds.SoundManager;
  * Platforms arranged in triangular form. 
  * Asteroids travel at 225 degree angle
  */
-public class Level3State extends Level2State {
+public class Level3State extends NewLevel2State {
 
 	private static final long serialVersionUID = -2094575762243216079L;
-	
-	protected Asteroid asteroid2;
-	
-	protected Boss boss;
+		
 	protected Boss boss2;
-	protected List<BigBullet> bossBullets;
 	protected List<BigBullet> boss2Bullets;
-	protected Rectangle bossExplosion;
-	private boolean isBossGoingDown = true;		//First boss is spawning on top
-	private boolean isBoss2GoingDown = false;	//Second boss is spawning on bottom
-	private boolean isBossSpawning = true;
+	private boolean isBoss2GoingDown = false;
+
 	private boolean isBoss2Spawning = true;
-	private int bossDamage = 0;
 	private int boss2Damage = 0;
 	
-	private long lastBossBulletTime;
 	private long lastBoss2BulletTime;
 	private long lastCollisionTime;
-	protected long lastAsteroid2Time;
 	
 	
 	
@@ -58,15 +49,12 @@ public class Level3State extends Level2State {
 		setStartState(GETTING_READY);
 		setCurrentState(getStartState());
 		
-		bossBullets = new ArrayList<BigBullet>();
 		boss2Bullets = new ArrayList<BigBullet>();
 		
 		newAsteroid(this);
 		newAsteroid2(this);
-		newBoss(this);
 		newBoss2(this);
 		
-		lastAsteroid2Time = -NEW_ASTEROID_DELAY;
 	}
 	
 	@Override
@@ -74,7 +62,7 @@ public class Level3State extends Level2State {
 		if(this.getInputHandler().isNPressed()){
 			return true;
 		}
-		return levelAsteroidsDestroyed >= 5 && bossDamage >= 5 && boss2Damage >=5;
+		return levelAsteroidsDestroyed >= 5 && boss2Damage >=5;
 	}
 	
 	@Override
@@ -96,7 +84,7 @@ public class Level3State extends Level2State {
 		drawAsteroid();
 		drawBullets();
 		drawBigBullets();
-		drawBosses();
+		drawBoss();
 		drawBossBullets();
 		checkBullletAsteroidCollisions();
 		checkBigBulletAsteroidCollisions();
@@ -155,32 +143,8 @@ public class Level3State extends Level2State {
 		}	
 	}
 	
-	protected void drawBosses(){
+	protected void drawBoss(){
 		Graphics2D g2d = getGraphics2D();
-		if(isBossSpawning){
-			boss.setLocation(this.getWidth() - boss.getPixelsWide(), 0);
-			getGraphicsManager().drawBoss(boss, g2d, this);
-			isBossSpawning = false;
-		}
-		
-		if(this.getHeight() - boss.getPixelsTall() > boss.getY() && isBossGoingDown){
-			boss.translate(0, boss.getDefaultSpeed());
-			getGraphicsManager().drawBoss(boss, g2d, this);
-		}
-		else{
-			isBossGoingDown = false;
-		}
-		
-		if(boss.getY() > 0 && !isBossGoingDown){
-			boss.translate(0, -boss.getDefaultSpeed());
-			getGraphicsManager().drawBoss(boss, g2d, this);
-		}
-		else if(!isBossGoingDown){
-			isBossGoingDown = true;
-			boss.translate(0, boss.getDefaultSpeed());
-			getGraphicsManager().drawBoss(boss, g2d, this);
-		}
-		
 		if(isBoss2Spawning){
 			boss2.setLocation(0, this.getHeight() - boss2.getPixelsTall());
 			getGraphicsManager().drawBoss(boss2, g2d, this);
@@ -208,15 +172,6 @@ public class Level3State extends Level2State {
 	
 	protected void checkBossBulletMegaManCollisions() {
 		GameStatus status = getGameStatus();
-		for(int i=0; i<bossBullets.size(); i++){
-			BigBullet bigBullet = bossBullets.get(i);
-			if(megaMan.intersects(bigBullet)){
-				status.setLivesLeft(status.getLivesLeft() - 1);
-				bossBullets.remove(i);
-				break;
-			}
-		}
-		
 		for(int i=0; i<boss2Bullets.size(); i++){
 			BigBullet bigBullet = boss2Bullets.get(i);
 			if(megaMan.intersects(bigBullet)){
@@ -230,14 +185,6 @@ public class Level3State extends Level2State {
 	//if MegaMan touches the enemy he loses one life point
 	protected void checkMegaManBossCollisions() {
 		GameStatus status = getGameStatus();
-		if(boss.intersects(megaMan)){
-			long currentTime = System.currentTimeMillis();
-			if((currentTime - lastCollisionTime) > 1000){
-				lastCollisionTime = currentTime;
-				status.setLivesLeft(status.getLivesLeft() - 1);
-			}
-		}
-		
 		if(boss2.intersects(megaMan)){
 			long currentTime = System.currentTimeMillis();
 			if((currentTime - lastCollisionTime) > 1000){
@@ -249,19 +196,6 @@ public class Level3State extends Level2State {
 	
 	protected void checkBulletBossCollisions() {
 		GameStatus status = getGameStatus();
-		for(int i=0; i<bullets.size(); i++){
-			Bullet bullet = bullets.get(i);
-			if(boss.intersects(bullet)){
-				bossDamage++;
-				if(bossDamage >= 5){
-					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
-					removeBoss(boss);
-				}
-				// remove bullet
-				bullets.remove(i);
-				break;
-			}
-		}
 		for(int i=0; i<bulletsL.size(); i++){
 			Bullet bullet = bulletsL.get(i);
 			if(boss2.intersects(bullet)){
@@ -279,20 +213,6 @@ public class Level3State extends Level2State {
 	
 	protected void checkBigBulletBossCollisions() {
 		GameStatus status = getGameStatus();
-		for(int i=0; i<bigBullets.size(); i++){
-			BigBullet bigBullet = bigBullets.get(i);
-			if(boss.intersects(bigBullet)){
-				bossDamage += 3;
-				if(bossDamage >= 5){
-					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
-					removeBoss(boss);
-				}
-				// remove big bullet
-				bigBullets.remove(i);
-				break;
-			}
-		}
-		
 		for(int i=0; i<bigBulletsL.size(); i++){
 			BigBullet bigBullet = bigBulletsL.get(i);
 			if(boss2.intersects(bigBullet)){
@@ -310,24 +230,7 @@ public class Level3State extends Level2State {
 	
 	protected void drawBossBullets() {
 		Graphics2D g2d = getGraphics2D();
-		
-		long currentTime = System.currentTimeMillis();
-		if((currentTime - lastBossBulletTime) > 1000){
-			lastBossBulletTime = currentTime;
-			fireBossBullet();
-		}
-		for(int i=0; i<bossBullets.size(); i++){
-			BigBullet bigBullet = bossBullets.get(i);
-			getGraphicsManager().drawBigBullet(bigBullet, g2d, this);
-
-			boolean remove = this.moveBossBullet(bigBullet);
-			if(remove){
-				bossBullets.remove(i);
-				i--;
-			}
-		}
-		
-		currentTime = System.currentTimeMillis();
+		long currentTime = System.currentTimeMillis();		
 		if((currentTime - lastBoss2BulletTime) > 1000){
 			lastBoss2BulletTime = currentTime;
 			fireBoss2Bullet(); 
@@ -344,30 +247,12 @@ public class Level3State extends Level2State {
 		}
 	}
 	
-	public void fireBossBullet(){
-		int xPos = boss.x;
-		int yPos = boss.y + boss.width/2 - BigBullet.HEIGHT + 4;
-		BigBullet  bossBullet = new BigBullet(xPos, yPos);
-		bossBullets.add(bossBullet);
-		this.getSoundManager().playBulletSound();
-	}
-	
 	public void fireBoss2Bullet(){
 		int xPos = boss2.x;
 		int yPos = boss2.y + boss.width/2 - BigBullet.HEIGHT + 4;
 		BigBullet  bossBullet = new BigBullet(xPos, yPos);
 		boss2Bullets.add(bossBullet);
 		this.getSoundManager().playBulletSound();
-	}
-	
-	public boolean moveBossBullet(BigBullet bossBullet){
-		if(bossBullet.getY() - bossBullet.getSpeed() >= 0){
-			bossBullet.translate(-bossBullet.getSpeed(), 0);
-			return false;
-		}
-		else{
-			return true;
-		}
 	}
 	
 	public boolean moveBoss2Bullet(BigBullet bossBullet){
@@ -395,13 +280,6 @@ public class Level3State extends Level2State {
 			}
 		}
 		return platforms;
-	}
-	
-	public Boss newBoss(Level3State screen){
-		int xPos = (int) (screen.getWidth() - Boss.WIDTH);
-		int yPos = 0;
-		boss = new Boss(xPos, yPos);
-		return boss;
 	}
 	
 	public Boss newBoss2(Level3State screen){
@@ -511,7 +389,7 @@ public class Level3State extends Level2State {
 		this.getSoundManager().playAsteroidExplosionSound();
 	}
 	
-	public Asteroid newAsteroid2(Level1State screen){
+	public Asteroid newAsteroid2(NewLevel1State screen){
 		int xPos = (int) (screen.getWidth() - Asteroid.WIDTH);
 		int yPos = rand.nextInt((int)(screen.getHeight() - Asteroid.HEIGHT- 32));
 		asteroid2 = new Asteroid(xPos, yPos);
