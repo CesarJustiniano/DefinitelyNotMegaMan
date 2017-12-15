@@ -20,6 +20,8 @@ public class InputHandler implements KeyListener{
 	private boolean nIsPressed;
 	private boolean sIsPressed;
 	private boolean iIsPressed;
+	
+	private boolean isFacingRight = true;
 
 	private LevelState levelState;
 	//private GameScreen gScreen;
@@ -54,6 +56,7 @@ public class InputHandler implements KeyListener{
 		nIsPressed = false;
 		sIsPressed = false;
 		iIsPressed = false;
+		isFacingRight = true;
 	}
 
 	public boolean isLeftPressed() {
@@ -103,6 +106,10 @@ public class InputHandler implements KeyListener{
 	public boolean isIPressed() {
 		return iIsPressed;
 	}
+	
+	public boolean isMegaManFacingRight(){
+		return isFacingRight;
+	}
 
 	/**
 	 * Handle a key input event.
@@ -117,9 +124,11 @@ public class InputHandler implements KeyListener{
 			break;
 		case KeyEvent.VK_LEFT:
 			this.leftIsPressed = true;
+			this.isFacingRight = false;		//MegaMan is looking at the left
 			break;
 		case KeyEvent.VK_RIGHT:
 			this.rightIsPressed = true;
+			this.isFacingRight = true;		//MegaMan is looking at the right
 			break;
 		case KeyEvent.VK_SPACE:
 			this.spaceIsPressed = true;

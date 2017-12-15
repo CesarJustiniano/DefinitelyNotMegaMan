@@ -261,7 +261,9 @@ public class Level3State extends Level2State {
 				bullets.remove(i);
 				break;
 			}
-			
+		}
+		for(int i=0; i<bulletsL.size(); i++){
+			Bullet bullet = bulletsL.get(i);
 			if(boss2.intersects(bullet)){
 				boss2Damage++;
 				if(boss2Damage >= 5){
@@ -269,7 +271,7 @@ public class Level3State extends Level2State {
 					removeBoss(boss2);
 				}
 				// remove bullet
-				bullets.remove(i);
+				bulletsL.remove(i);
 				break;
 			}
 		}
@@ -289,7 +291,10 @@ public class Level3State extends Level2State {
 				bigBullets.remove(i);
 				break;
 			}
-			
+		}
+		
+		for(int i=0; i<bigBulletsL.size(); i++){
+			BigBullet bigBullet = bigBulletsL.get(i);
 			if(boss2.intersects(bigBullet)){
 				boss2Damage += 3;
 				if(boss2Damage >= 5){
@@ -297,7 +302,7 @@ public class Level3State extends Level2State {
 					removeBoss(boss2);
 				}
 				// remove big bullet
-				bigBullets.remove(i);
+				bigBulletsL.remove(i);
 				break;
 			}
 		}
