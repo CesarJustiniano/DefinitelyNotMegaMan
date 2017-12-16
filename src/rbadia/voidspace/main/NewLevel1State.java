@@ -468,7 +468,7 @@ public class NewLevel1State extends LevelState {
 		Graphics2D g2d = getGraphics2D();
 		GameStatus status = getGameStatus();
 		if(!status.isNewMegaMan()){
-			if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true || FireL () == true))){
+			if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true || FireL () == true || Fire2L() == true))){
 				if(getInputHandler().isMegaManFacingRight()) {
 					getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
 				}
@@ -478,7 +478,7 @@ public class NewLevel1State extends LevelState {
 			}
 		}
 
-		if((Fire() == true || Fire2()== true || FireL() == true) && (Gravity()==false)){
+		if((Fire() == true || Fire2()== true || FireL() == true || Fire2L() == true) && (Gravity()==false)){
 			if(getInputHandler().isMegaManFacingRight()) {
 				getGraphicsManager().drawMegaFireR(megaMan, g2d, this);
 			}
@@ -488,7 +488,7 @@ public class NewLevel1State extends LevelState {
 			
 		}
 
-		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && (FireL() == false)){
+		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && (FireL() == false) && (Fire2L() == false)){
 			if(getInputHandler().isMegaManFacingRight()) {
 				getGraphicsManager().drawMegaMan(megaMan, g2d, this);
 			}
@@ -595,6 +595,19 @@ public class NewLevel1State extends LevelState {
 			BigBullet bigBullet = bigBullets.get(i);
 			if((bigBullet.getX() > megaMan.getX() + megaMan.getWidth()) && 
 					(bigBullet.getX() <= megaMan.getX() + megaMan.getWidth() + 60)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	protected boolean Fire2L(){
+		MegaMan megaMan = this.getMegaMan();
+		List<BigBullet> bigBulletsL = this.getBigBulletsL();
+		for(int i=0; i<bigBulletsL.size(); i++){
+			BigBullet bigBullet = bigBulletsL.get(i);
+			if((bigBullet.getX() < megaMan.getX()) && 
+					(bigBullet.getX() > megaMan.getX() - 60)){
 				return true;
 			}
 		}
