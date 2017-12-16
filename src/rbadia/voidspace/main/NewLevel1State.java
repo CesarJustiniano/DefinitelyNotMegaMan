@@ -469,16 +469,33 @@ public class NewLevel1State extends LevelState {
 		GameStatus status = getGameStatus();
 		if(!status.isNewMegaMan()){
 			if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true))){
-				getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
+				if(getInputHandler().isMegaManFacingRight()) {
+					getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
+				}
+				else {
+					getGraphicsManager().drawMegaManFallL(megaMan, g2d, this);
+				}
 			}
 		}
 
 		if((Fire() == true || Fire2()== true) && (Gravity()==false)){
-			getGraphicsManager().drawMegaFireR(megaMan, g2d, this);
+			if(getInputHandler().isMegaManFacingRight()) {
+				getGraphicsManager().drawMegaFireR(megaMan, g2d, this);
+			}
+			else {
+				getGraphicsManager().drawMegaManFireL(megaMan, g2d, this);
+			}
+			
 		}
 
 		if((Gravity()==false) && (Fire()==false) && (Fire2()==false)){
-			getGraphicsManager().drawMegaMan(megaMan, g2d, this);
+			if(getInputHandler().isMegaManFacingRight()) {
+				getGraphicsManager().drawMegaMan(megaMan, g2d, this);
+			}
+			else {
+				getGraphicsManager().drawMegaManL(megaMan, g2d, this);
+			}
+		
 		}
 	}
 
