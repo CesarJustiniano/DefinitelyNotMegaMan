@@ -42,7 +42,7 @@ public class NewGraphicsManager extends GraphicsManager{
 			System.exit(-1);
 		}
 		
-		//Flip images 
+		
 		
 	}
 	

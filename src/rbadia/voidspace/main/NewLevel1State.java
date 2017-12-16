@@ -468,7 +468,7 @@ public class NewLevel1State extends LevelState {
 		Graphics2D g2d = getGraphics2D();
 		GameStatus status = getGameStatus();
 		if(!status.isNewMegaMan()){
-			if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true))){
+			if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true || FireL () == true))){
 				if(getInputHandler().isMegaManFacingRight()) {
 					getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
 				}
@@ -478,7 +478,7 @@ public class NewLevel1State extends LevelState {
 			}
 		}
 
-		if((Fire() == true || Fire2()== true) && (Gravity()==false)){
+		if((Fire() == true || Fire2()== true || FireL() == true) && (Gravity()==false)){
 			if(getInputHandler().isMegaManFacingRight()) {
 				getGraphicsManager().drawMegaFireR(megaMan, g2d, this);
 			}
@@ -488,7 +488,7 @@ public class NewLevel1State extends LevelState {
 			
 		}
 
-		if((Gravity()==false) && (Fire()==false) && (Fire2()==false)){
+		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && (FireL() == false)){
 			if(getInputHandler().isMegaManFacingRight()) {
 				getGraphicsManager().drawMegaMan(megaMan, g2d, this);
 			}
@@ -568,6 +568,19 @@ public class NewLevel1State extends LevelState {
 			Bullet bullet = bullets.get(i);
 			if((bullet.getX() > megaMan.getX() + megaMan.getWidth()) && 
 					(bullet.getX() <= megaMan.getX() + megaMan.getWidth() + 60)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	protected boolean FireL() {
+		MegaMan megaMan = this.getMegaMan();
+		List<Bullet> bulletsL = this.getBulletsL();
+		for(int i=0; i<bulletsL.size(); i++){
+			Bullet bullet = bulletsL.get(i);
+			if((bullet.getX() < megaMan.getX()) && 
+					(bullet.getX() > megaMan.getX() - 60)){
 				return true;
 			}
 		}
