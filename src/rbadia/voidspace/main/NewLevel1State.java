@@ -226,7 +226,7 @@ public class NewLevel1State extends LevelState {
 		}
 
 		clearScreen();
-		drawStars(50);
+		//drawStars(50);
 		drawFloor();
 		drawPlatforms();
 		drawMegaMan();
@@ -518,8 +518,9 @@ public class NewLevel1State extends LevelState {
 	protected void clearScreen() {
 		// clear screen
 		Graphics2D g2d = getGraphics2D();
-		g2d.setPaint(Color.BLACK);
-		g2d.fillRect(0, 0, getSize().width, getSize().height);
+//		g2d.setPaint(Color.BLACK);
+//		g2d.fillRect(0, 0, getSize().width, getSize().height);
+		getGraphicsManager().drawBackground(0, 0, g2d, this);
 	}
 
 	/**

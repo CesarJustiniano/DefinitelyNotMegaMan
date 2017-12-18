@@ -23,6 +23,7 @@ public class NewGraphicsManager extends GraphicsManager{
 	private BufferedImage megaManImgL;
 	private BufferedImage megaFallLImg;
 	private BufferedImage megaFireLImg;
+	private BufferedImage backgroundImg;
 
 	
 	public NewGraphicsManager(){
@@ -34,6 +35,7 @@ public class NewGraphicsManager extends GraphicsManager{
 			this.megaManImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaMan3.png"));
 			this.megaFallRImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFallRight.png"));
 			this.megaFireRImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFireRight.png"));
+			this.backgroundImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/085.png"));
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "The graphic files are either corrupt or missing.",
@@ -79,6 +81,10 @@ public class NewGraphicsManager extends GraphicsManager{
 		megaFireLImg = op.filter(megaFireRImg, null);
 		
 		g2d.drawImage(megaFireLImg, megaMan.x, megaMan.y, observer);
+	}
+	
+	public void drawBackground(int xPos, int yPos, Graphics2D g2d, ImageObserver observer){
+		g2d.drawImage(backgroundImg, xPos, yPos, observer);
 	}
 
 }
