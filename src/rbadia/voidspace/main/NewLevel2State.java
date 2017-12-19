@@ -1,8 +1,15 @@
 package rbadia.voidspace.main;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import rbadia.voidspace.graphics.NewGraphicsManager;
 import rbadia.voidspace.model.BigBullet;
@@ -46,6 +53,18 @@ public class NewLevel2State extends NewLevel1State {
 		
 		newBoss(this);
 	}
+	
+	@Override
+	public void doGettingReady() {
+		setCurrentState(GETTING_READY);
+		getGameLogic().drawGetReady();
+		repaint();
+		LevelLogic.delay(2000);
+		
+//		if(!MegaManMain.audioClip.isRunning()){
+			MegaManMain.audioClip.close();
+//		}
+	};
 	
 	/**
 	 * Update the game screen's backbuffer image.
@@ -293,6 +312,4 @@ public class NewLevel2State extends NewLevel1State {
 		// play boss explosion sound
 		this.getSoundManager().playAsteroidExplosionSound();
 	}
-	
-	
 }

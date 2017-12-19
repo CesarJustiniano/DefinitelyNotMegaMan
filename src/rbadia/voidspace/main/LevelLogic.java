@@ -434,29 +434,6 @@ public class LevelLogic {
 		if(ih.isRightPressed()){
 			getLevelState().moveMegaManRight();
 		}
-		
-		if(ih.isMPressed()){ //Mute button
-			if(this.getMute() == 0){
-				MegaManMain.audioClip.close();
-				mute = 1;
-			}
-			else{
-				mute = 0;
-				MegaManMain.audioFile = new File("audio/mainGame.wav");
-				try {
-					MegaManMain.audioStream = AudioSystem.getAudioInputStream(MegaManMain.audioFile);
-					MegaManMain.audioClip.open(MegaManMain.audioStream);
-					MegaManMain.audioClip.start();
-					MegaManMain.audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-				} catch (UnsupportedAudioFileException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (LineUnavailableException e1) {
-					e1.printStackTrace();
-				}
-			}
-		}
 	}
 
 	public static void delay(long millis) {

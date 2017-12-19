@@ -2,6 +2,13 @@ package rbadia.voidspace.main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 
 /**
@@ -22,6 +29,7 @@ public class InputHandler implements KeyListener{
 	private boolean iIsPressed;
 	
 	private boolean isFacingRight = true;
+	private boolean isMute = false;
 
 	private LevelState levelState;
 	//private GameScreen gScreen;
@@ -57,6 +65,7 @@ public class InputHandler implements KeyListener{
 		sIsPressed = false;
 		iIsPressed = false;
 		isFacingRight = true;
+		isMute = isMute();
 	}
 
 	public boolean isLeftPressed() {
@@ -107,6 +116,9 @@ public class InputHandler implements KeyListener{
 		return iIsPressed;
 	}
 	
+	public boolean isMute() {
+		return isMute;
+	}
 	public boolean isMegaManFacingRight(){
 		return isFacingRight;
 	}
@@ -147,6 +159,26 @@ public class InputHandler implements KeyListener{
 			break;
 		case KeyEvent.VK_M:
 			this.mIsPressed= true;
+			if(isMute){
+				MegaManMain.audioFile = new File("audio/mainGame.wav");
+				try {
+					MegaManMain.audioStream = AudioSystem.getAudioInputStream(MegaManMain.audioFile);
+					MegaManMain.audioClip.open(MegaManMain.audioStream);
+					MegaManMain.audioClip.start();
+					MegaManMain.audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+				} catch (UnsupportedAudioFileException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (LineUnavailableException e1) {
+					e1.printStackTrace();
+				}
+				isMute = false;
+			}
+			else{
+				MegaManMain.audioClip.close();
+				isMute = true;
+			}
 			break;
 		case KeyEvent.VK_N:
 			this.nIsPressed = true;

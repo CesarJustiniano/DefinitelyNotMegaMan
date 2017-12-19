@@ -289,6 +289,7 @@ public class Level3State extends NewLevel2State {
 		return boss2;
 	}
 	
+	@Override
 	public void removeBoss(Boss boss){
 		// "remove" boss
 		bossExplosion = new Rectangle(
@@ -296,7 +297,7 @@ public class Level3State extends NewLevel2State {
 				boss.y,
 				boss.getPixelsWide(),
 				boss.getPixelsTall());
-		boss.setLocation(-boss.getPixelsWide(), -boss.getPixelsTall());
+		boss.setLocation(boss.getPixelsWide() + this.getWidth(), -boss.getPixelsTall());
 		// play boss explosion sound
 		this.getSoundManager().playAsteroidExplosionSound();
 	}
