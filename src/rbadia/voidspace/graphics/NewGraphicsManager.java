@@ -23,7 +23,10 @@ public class NewGraphicsManager extends GraphicsManager{
 	private BufferedImage megaManImgL;
 	private BufferedImage megaFallLImg;
 	private BufferedImage megaFireLImg;
-	private BufferedImage backgroundImg;
+	private BufferedImage backgroundImg1;
+	private BufferedImage backgroundImg2;
+	private BufferedImage backgroundImg3;
+	private BufferedImage initialBackground;
 
 	
 	public NewGraphicsManager(){
@@ -35,7 +38,10 @@ public class NewGraphicsManager extends GraphicsManager{
 			this.megaManImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaMan3.png"));
 			this.megaFallRImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFallRight.png"));
 			this.megaFireRImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFireRight.png"));
-			this.backgroundImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/085.png"));
+			this.backgroundImg1 = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/Background1.png"));
+			this.backgroundImg2 = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/Background2.png"));
+			this.backgroundImg3 = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/Background3.png"));
+			this.initialBackground = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/InitialBackground.png"));
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "The graphic files are either corrupt or missing.",
@@ -83,8 +89,20 @@ public class NewGraphicsManager extends GraphicsManager{
 		g2d.drawImage(megaFireLImg, megaMan.x, megaMan.y, observer);
 	}
 	
-	public void drawBackground(int xPos, int yPos, Graphics2D g2d, ImageObserver observer){
-		g2d.drawImage(backgroundImg, xPos, yPos, observer);
+	public void drawBackground1(int xPos, int yPos, Graphics2D g2d, ImageObserver observer){
+		g2d.drawImage(backgroundImg1, xPos, yPos, observer);
+	}
+	
+	public void drawBackground2(int xPos, int yPos, Graphics2D g2d, ImageObserver observer){
+		g2d.drawImage(backgroundImg2, xPos, yPos, observer);
+	}
+	
+	public void drawBackground3(int xPos, int yPos, Graphics2D g2d, ImageObserver observer){
+		g2d.drawImage(backgroundImg3, xPos, yPos, observer);
+	}
+	
+	public void drawInitialBackground(int xPos, int yPos, Graphics2D g2d, ImageObserver observer){
+		g2d.drawImage(initialBackground, xPos, yPos, observer);
 	}
 
 }

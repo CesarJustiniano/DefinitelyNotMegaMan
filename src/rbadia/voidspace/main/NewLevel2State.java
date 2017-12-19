@@ -61,7 +61,7 @@ public class NewLevel2State extends NewLevel1State {
 		}
 
 		clearScreen();
-		drawStars(50);
+		//drawStars(50);
 		drawFloor();
 		drawPlatforms();
 		drawMegaMan();

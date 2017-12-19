@@ -520,7 +520,28 @@ public class NewLevel1State extends LevelState {
 		Graphics2D g2d = getGraphics2D();
 //		g2d.setPaint(Color.BLACK);
 //		g2d.fillRect(0, 0, getSize().width, getSize().height);
-		getGraphicsManager().drawBackground(0, 0, g2d, this);
+		
+		if(getCurrentState() == 0) {
+			//Initial State
+			this.getGraphicsManager().drawInitialBackground(0, 0, g2d, this);
+		}
+		else {
+			if(this.getLevel() == 1) {
+				this.getGraphicsManager().drawBackground1(0, 0, g2d, this);
+			}
+			else if(this.getLevel() == 2) {
+				this.getGraphicsManager().drawBackground2(0, 0, g2d, this);
+			}
+			else if(this.getLevel() == 3) {
+				this.getGraphicsManager().drawBackground3(0, 0, g2d, this);
+			}
+			else {
+				g2d.setPaint(Color.BLACK);
+				g2d.fillRect(0, 0, getSize().width, getSize().height);
+			}
+			
+		}
+		
 	}
 
 	/**
