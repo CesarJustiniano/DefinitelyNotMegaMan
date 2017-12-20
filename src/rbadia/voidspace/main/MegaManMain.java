@@ -34,7 +34,7 @@ public class MegaManMain {
 
 
 		MainFrame frame = new MainFrame();              		// Main Game Window
-		LevelLogic gameLogic = new LevelLogic();        		// Coordinates among various levels
+		NewLevelLogic gameLogic = new NewLevelLogic();        		// Coordinates among various levels
 		InputHandler inputHandler = new InputHandler(); 		// Keyboard listener
 		NewGraphicsManager graphicsMan = new NewGraphicsManager(); // Draws all graphics for game objects
 		SoundManager soundMan = new SoundManager();			// Loads and plays all sounds during the game

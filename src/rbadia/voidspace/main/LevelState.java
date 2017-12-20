@@ -22,7 +22,7 @@ public abstract class LevelState extends JPanel {
 	private int startState = START_STATE;
 	
 	private NewGraphicsManager graphicsManager;
-	private LevelLogic gameLogic;
+	private NewLevelLogic gameLogic;
 	private InputHandler inputHandler;
 	private MainFrame mainFrame;
 	private GameStatus status;
@@ -32,7 +32,7 @@ public abstract class LevelState extends JPanel {
 	
 	// Getters
 	public NewGraphicsManager getGraphicsManager() { return graphicsManager; }
-	public LevelLogic getGameLogic() { return gameLogic; }
+	public NewLevelLogic getGameLogic() { return gameLogic; }
 	public InputHandler getInputHandler() { return inputHandler; }
 	public MainFrame getMainFrame() { return mainFrame; }
 	public GameStatus getGameStatus() { return status; }
@@ -44,7 +44,7 @@ public abstract class LevelState extends JPanel {
 	
 	// Setters
 	protected void setGraphicsManager(NewGraphicsManager graphicsManager) { this.graphicsManager = graphicsManager; }
-	protected void setGameLogic(LevelLogic gameLogic) { this.gameLogic = gameLogic; }
+	protected void setGameLogic(NewLevelLogic gameLogic) { this.gameLogic = gameLogic; }
 	protected void setInputHandler(InputHandler inputHandler) { this.inputHandler = inputHandler; }
 	public void setMainFrame ( MainFrame mainFrame) { this.mainFrame = mainFrame; }
 	public void setGameStatus(GameStatus status) { this.status = status; }

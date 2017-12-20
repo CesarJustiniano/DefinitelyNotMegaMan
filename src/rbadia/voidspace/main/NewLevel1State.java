@@ -65,7 +65,7 @@ public class NewLevel1State extends LevelState {
 
 	// Constructors
 	public NewLevel1State(int level, MainFrame frame, GameStatus status, 
-			LevelLogic gameLogic, InputHandler inputHandler,
+			NewLevelLogic gameLogic, InputHandler inputHandler,
 			NewGraphicsManager graphicsMan, SoundManager soundMan) {
 		super();
 		this.setSize(new Dimension(500, 400));
@@ -469,7 +469,7 @@ public class NewLevel1State extends LevelState {
 		GameStatus status = getGameStatus();
 		if(!status.isNewMegaMan()){
 			if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true || FireL () == true || Fire2L() == true))){
-				if(getInputHandler().isMegaManFacingRight()) {
+				if(getGameLogic().isMegaManFacingRight()) {
 					getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
 				}
 				else {
@@ -479,7 +479,7 @@ public class NewLevel1State extends LevelState {
 		}
 
 		if((Fire() == true || Fire2()== true || FireL() == true || Fire2L() == true) && (Gravity()==false)){
-			if(getInputHandler().isMegaManFacingRight()) {
+			if(getGameLogic().isMegaManFacingRight()) {
 				getGraphicsManager().drawMegaFireR(megaMan, g2d, this);
 			}
 			else {
@@ -489,7 +489,7 @@ public class NewLevel1State extends LevelState {
 		}
 
 		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && (FireL() == false) && (Fire2L() == false)){
-			if(getInputHandler().isMegaManFacingRight()) {
+			if(getGameLogic().isMegaManFacingRight()) {
 				getGraphicsManager().drawMegaMan(megaMan, g2d, this);
 			}
 			else {
@@ -671,7 +671,7 @@ public class NewLevel1State extends LevelState {
 	 * Fire a bullet from life.
 	 */
 	public void fireBullet(){
-		if(this.getInputHandler().isMegaManFacingRight()){
+		if(getGameLogic().isMegaManFacingRight()){
 			Bullet bullet = new Bullet(megaMan.x + megaMan.width - Bullet.WIDTH/2,
 					megaMan.y + megaMan.width/2 - Bullet.HEIGHT +2);
 			bullets.add(bullet);
@@ -690,7 +690,7 @@ public class NewLevel1State extends LevelState {
 	 */
 	public void fireBigBullet(){
 		//BigBullet bigBullet = new BigBullet(megaMan);
-		if(this.getInputHandler().isMegaManFacingRight()){
+		if(getGameLogic().isMegaManFacingRight()){
 			int xPos = megaMan.x + megaMan.width - BigBullet.WIDTH / 2;
 			int yPos = megaMan.y + megaMan.width/2 - BigBullet.HEIGHT + 4;
 			BigBullet  bigBullet = new BigBullet(xPos, yPos);

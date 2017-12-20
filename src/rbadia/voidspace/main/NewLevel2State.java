@@ -1,15 +1,8 @@
 package rbadia.voidspace.main;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import rbadia.voidspace.graphics.NewGraphicsManager;
 import rbadia.voidspace.model.BigBullet;
@@ -38,7 +31,7 @@ public class NewLevel2State extends NewLevel1State {
 	
 	// Constructors
 	public NewLevel2State(int level, MainFrame frame, GameStatus status, 
-			LevelLogic gameLogic, InputHandler inputHandler,
+			NewLevelLogic gameLogic, InputHandler inputHandler,
 			NewGraphicsManager graphicsMan, SoundManager soundMan) {
 		super(level, frame, status, gameLogic, inputHandler, graphicsMan, soundMan);
 	}
@@ -61,49 +54,21 @@ public class NewLevel2State extends NewLevel1State {
 		repaint();
 		LevelLogic.delay(2000);
 		
-//		if(!MegaManMain.audioClip.isRunning()){
-			MegaManMain.audioClip.close();
-//		}
+		MegaManMain.audioClip.close();
 	};
 	
 	/**
 	 * Update the game screen's backbuffer image.
 	 */
 	public void updateScreen(){
-		Graphics2D g2d = getGraphics2D();
-		GameStatus status = this.getGameStatus();
-
-		// save original font - for later use
-		if(this.originalFont == null){
-			this.originalFont = g2d.getFont();
-			this.bigFont = originalFont;
-		}
-
-		clearScreen();
-		//drawStars(50);
-		drawFloor();
-		drawPlatforms();
-		drawMegaMan();
-		drawAsteroid();
-		drawBullets();
-		drawBigBullets();
+		super.updateScreen();
+		
 		drawBoss();
 		drawBossBullets();
-		checkBullletAsteroidCollisions();
-		checkBigBulletAsteroidCollisions();
-		checkMegaManAsteroidCollisions();
-		checkAsteroidFloorCollisions();
 		checkBossBulletMegaManCollisions();
 		checkMegaManBossCollisions();
 		checkBulletBossCollisions();
 		checkBigBulletBossCollisions();
-
-		// update asteroids destroyed (score) label  
-		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getAsteroidsDestroyed()));
-		// update lives left label
-		getMainFrame().getLivesValueLabel().setText(Integer.toString(status.getLivesLeft()));
-		//update level label
-		getMainFrame().getLevelValueLabel().setText(Long.toString(status.getLevel()));
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class Level2State extends Level1State {
 	
 	// Constructors
 	public Level2State(int level, MainFrame frame, GameStatus status, 
-			LevelLogic gameLogic, InputHandler inputHandler,
+			NewLevelLogic gameLogic, InputHandler inputHandler,
 			NewGraphicsManager graphicsMan, SoundManager soundMan) {
 		super(level, frame, status, gameLogic, inputHandler, graphicsMan, soundMan);
 	}

@@ -61,7 +61,7 @@ public class Level1State extends LevelState {
 
 	// Constructors
 	public Level1State(int level, MainFrame frame, GameStatus status, 
-			LevelLogic gameLogic, InputHandler inputHandler,
+			NewLevelLogic gameLogic, InputHandler inputHandler,
 			NewGraphicsManager graphicsMan, SoundManager soundMan) {
 		super();
 		this.setSize(new Dimension(500, 400));
