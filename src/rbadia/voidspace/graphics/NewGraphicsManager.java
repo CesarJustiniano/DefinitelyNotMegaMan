@@ -26,6 +26,7 @@ public class NewGraphicsManager extends GraphicsManager{
 	private BufferedImage backgroundImg1;
 	private BufferedImage backgroundImg2;
 	private BufferedImage backgroundImg3;
+	private BufferedImage backgroundImg4;
 	private BufferedImage initialBackground;
 
 	
@@ -41,6 +42,7 @@ public class NewGraphicsManager extends GraphicsManager{
 			this.backgroundImg1 = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/Background1.png"));
 			this.backgroundImg2 = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/Background2.png"));
 			this.backgroundImg3 = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/Background3.png"));
+			this.backgroundImg4 = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/Background4.png"));
 			this.initialBackground = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/InitialBackground.png"));
 
 		} catch (Exception e) {
@@ -99,6 +101,10 @@ public class NewGraphicsManager extends GraphicsManager{
 	
 	public void drawBackground3(int xPos, int yPos, Graphics2D g2d, ImageObserver observer){
 		g2d.drawImage(backgroundImg3, xPos, yPos, observer);
+	}
+	
+	public void drawBackground4(int xPos, int yPos, Graphics2D g2d, ImageObserver observer){
+		g2d.drawImage(backgroundImg4, xPos, yPos, observer);
 	}
 	
 	public void drawInitialBackground(int xPos, int yPos, Graphics2D g2d, ImageObserver observer){

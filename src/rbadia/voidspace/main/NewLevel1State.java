@@ -535,6 +535,9 @@ public class NewLevel1State extends LevelState {
 			else if(this.getLevel() == 3) {
 				this.getGraphicsManager().drawBackground3(0, 0, g2d, this);
 			}
+			else if(this.getLevel() == 4) {
+				this.getGraphicsManager().drawBackground4(0, 0, g2d, this);
+			}
 			else {
 				g2d.setPaint(Color.BLACK);
 				g2d.fillRect(0, 0, getSize().width, getSize().height);
