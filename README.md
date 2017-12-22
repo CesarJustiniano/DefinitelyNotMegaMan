@@ -6,17 +6,28 @@
 
 
 ## Team Name: 
+thejavavengers
 
 ## Team Members: 
 
-	1. <Full Name> (<GitHubUsername>) - <UPRMEmail>
+	1. <José E. López Nieves > (joselopeznieves) - <jose.lopez91@upr.edu>
 	2. <Full Name> (<GitHubUsername>) - <UPRMEmail>
 
 ## The following **required** functionality is implemented:
 
 - [x] This is a functionality is implemented.
+- N key skips levels.
+-Various asteroids on the screen.
+-Asteroids appear out of random positions on the screen.
+-Asteroids move in random speeds.
+-Platforms in other patterns.
+-Changed backgrouds.
+-Add enemies.
+-MegaMan turns and shoots in both directions.
+
 
 - [ ] This is a functionality is not implemented.
+-Mute button does not work due to a sound bug in the game.
 
 
 
@@ -25,15 +36,23 @@
 
 
 - [x] An implemented feauture.
+-MegaMan changes animation depending on the action.
 
 - [ ] A planned unimplemented feature.
+-Power ups.
+-Bigger bosses.
 
 ## Notes
 
 
 	What was your project's biggest challenge?
+	-Jose: Understanding the base code in order to implement the changes 
+	efficiently. More specifically adding new levels with different challenges
+	without unnecessary code.  
 	
     What was your favorite part of the project
+    	-Jose: Animating MegaMan by making him responsive to the situation he is in. 
+	Also, changing the backgrounds to the levels. 
 
 
 
