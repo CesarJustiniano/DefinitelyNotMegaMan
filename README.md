@@ -1,7 +1,9 @@
 # Project 1 - Definitely Not Megaman
 	Small project description	
+	
 
 	Estimated Time spent: Spent total in hours
+	-Jose: ~15 hours
 
 
 
